@@ -40,6 +40,7 @@ export type Database = {
       }
       grievance_reports: {
         Row: {
+          admin_notes: string | null
           complaint_category: string
           created_at: string
           description: string
@@ -54,6 +55,7 @@ export type Database = {
           user_id: string
         }
         Insert: {
+          admin_notes?: string | null
           complaint_category: string
           created_at?: string
           description: string
@@ -68,6 +70,7 @@ export type Database = {
           user_id: string
         }
         Update: {
+          admin_notes?: string | null
           complaint_category?: string
           created_at?: string
           description?: string
@@ -113,8 +116,66 @@ export type Database = {
         }
         Relationships: []
       }
+      reports: {
+        Row: {
+          admin_notes: string | null
+          category: string | null
+          created_at: string
+          description: string
+          entity_type: string | null
+          entity_value: string | null
+          file_urls: string[] | null
+          id: string
+          location: string | null
+          severity: string | null
+          status: string | null
+          subcategory: string | null
+          title: string
+          type: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          admin_notes?: string | null
+          category?: string | null
+          created_at?: string
+          description: string
+          entity_type?: string | null
+          entity_value?: string | null
+          file_urls?: string[] | null
+          id?: string
+          location?: string | null
+          severity?: string | null
+          status?: string | null
+          subcategory?: string | null
+          title: string
+          type: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          admin_notes?: string | null
+          category?: string | null
+          created_at?: string
+          description?: string
+          entity_type?: string | null
+          entity_value?: string | null
+          file_urls?: string[] | null
+          id?: string
+          location?: string | null
+          severity?: string | null
+          status?: string | null
+          subcategory?: string | null
+          title?: string
+          type?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       suspicious_entities: {
         Row: {
+          admin_notes: string | null
           created_at: string
           description: string
           entity_type: string
@@ -127,6 +188,7 @@ export type Database = {
           user_id: string
         }
         Insert: {
+          admin_notes?: string | null
           created_at?: string
           description: string
           entity_type: string
@@ -139,6 +201,7 @@ export type Database = {
           user_id: string
         }
         Update: {
+          admin_notes?: string | null
           created_at?: string
           description?: string
           entity_type?: string
@@ -152,15 +215,50 @@ export type Database = {
         }
         Relationships: []
       }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
+      is_admin: {
+        Args: { _user_id: string }
+        Returns: boolean
+      }
+      make_user_admin: {
+        Args: { _user_email: string }
+        Returns: undefined
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "admin" | "user"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -287,6 +385,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["admin", "user"],
+    },
   },
 } as const
