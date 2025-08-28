@@ -146,7 +146,7 @@ export const useReports = () => {
   };
 
   // Function to update a report with file URLs after upload
-  const updateReportWithFileUrls = async (reportId: string, table: string, urls: string[]) => {
+  const updateReportWithFileUrls = async (reportId: string, table: 'grievance_reports' | 'suspicious_entities', urls: string[]) => {
       const { data, error } = await supabase
         .from(table)
         .update({ evidence_files: urls })

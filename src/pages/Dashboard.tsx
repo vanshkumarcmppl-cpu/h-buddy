@@ -53,10 +53,10 @@ const Dashboard = () => {
   // Get user data from profile or use defaults
   const userData = {
     name: profile?.full_name || "User",
-    email: profile?.email || user?.email || "",
-    phone: profile?.phone || "",
+    email: user?.email || "",
+    phone: profile?.phone_number || "",
     organization: profile?.organization || "",
-    avatar: profile?.avatar_url || "",
+    avatar: "",
     joinDate: profile?.created_at ? new Date(profile.created_at).toLocaleDateString() : "",
     reportsSubmitted: reports.length,
     status: "Verified"

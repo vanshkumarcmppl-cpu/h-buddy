@@ -38,7 +38,7 @@ export const MyReportsTab = () => {
       case 'resolved':
       case 'verified':
       case 'closed':
-        return 'success' as const; // Explicitly success
+        return 'secondary' as const;
       case 'rejected':
       case 'false_positive':
         return 'destructive' as const;
